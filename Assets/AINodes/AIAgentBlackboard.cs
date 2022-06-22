@@ -4,6 +4,7 @@ using TMPro;
 namespace AINodes
 {
     using System.Collections.Generic;
+    using System.Linq;
     using UnityEngine;
 
     public class AIAgentBlackboard : MonoBehaviour
@@ -18,7 +19,9 @@ namespace AINodes
         void OnEnable()
         {
             bbText = GetComponentInChildren<TMP_Text>();
-            values.Add("Hello", "World");
+            values.Add("Hello", true);
+            values.Add("World", true);
+            values.Add("Penis", false);
         }
 
         void Update()
@@ -41,6 +44,11 @@ namespace AINodes
                 props.Add(new BlackBoardProperty(item.Key, item.Value));
 
             return props;
+        }
+
+        public BlackBoardProperty GetBoardProperty(string key)
+        {
+            return GetProperties().First(e => e.key == key);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AINodes
             String
         }
 
-        private string key;
+        public string key;
         public object value;
 
         public PropertyType propertyType;

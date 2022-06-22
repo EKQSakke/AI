@@ -2,13 +2,12 @@ namespace AINodes
 {
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using UnityEngine;
 
-    public class AISequence : MonoBehaviour, IExecutableNode
+    public class AISequence : ExecutableNode
     {
         public List<AIAction> actions = new();
 
-        public async Task Execute()
+        public override async Task Execute()
         {
             foreach (var item in actions)
             {

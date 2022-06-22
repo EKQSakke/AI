@@ -4,23 +4,20 @@ namespace AINodes
     using System.Threading.Tasks;
     using UnityEngine;
 
-    public class AISelector : MonoBehaviour, IExecutableNode
+    public class AISelector : ExecutableNode
     {
-        public AITree tree;
+        [SerializeField] List<AINode> targetNodes = new();
 
-        List<AINode> targetNodes = new();
-        
-        public async Task Execute()
+        public override async Task Execute()
         {
             foreach (var node in targetNodes)
             {
                 if (!node.Check())
-                    return;
+                    continue;
 
-                foreach (var execNode in node.executableNodes)
-                {
-                    await execNode.Execute();
-                }
+                TaskStart();
+                await node.Execute();
+                TaskStop();
                 return;
             }
         }

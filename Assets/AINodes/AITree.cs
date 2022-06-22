@@ -1,33 +1,51 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace AINodes
 {
     using UnityEngine;
 
     public class AITree : MonoBehaviour
     {
-        public AIAgentBlackboard blackboard;
+        AIAgentBlackboard blackboard;
         [SerializeField] float timeout = 1f;
-        [SerializeField] IExecutableNode root;
+        [SerializeField] AINode rootNode;
+        List<Task> tasks = new();
         float currentTime = 0;
 
-        void OnEnable()
+        public AIAgentBlackboard Blackboard
         {
-            blackboard = GetComponentInChildren<AIAgentBlackboard>();
-            root?.Execute();
+            get => blackboard;
+            set => blackboard = value;
         }
 
-        void Update()
+        void Awake()
+        {
+            Blackboard = GetComponentInChildren<AIAgentBlackboard>();
+        }
+
+        private void OnEnable()
+        {
+            StartTree();
+        }
+
+        void FixedUpdate()
         {
             currentTime -= Time.deltaTime;
 
-            if (currentTime <= 0)
+            if (currentTime <= 0 && !tasks.Any(e => !e.IsCompleted))
                 StartTree();
         }
 
-        void StartTree()
+        async void StartTree()
         {
             currentTime = timeout;
-            root?.Execute();
-        }
+            
+            if (rootNode is null)
+                return;
 
+            tasks.Add(rootNode.Execute());
+        }
     }
 }

@@ -1,11 +1,10 @@
 namespace AINodes
 {
     using System.Threading.Tasks;
-    using UnityEngine;
 
-    public class AIAction : MonoBehaviour, IExecutableNode
+    public class AIAction : ExecutableNode
     {
-        public async Task Execute()
+        public override async Task Execute()
         {
             await Task.CompletedTask;
         }
