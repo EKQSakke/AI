@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Collections.Generic;
 namespace AINodes
 {
+    using System.Linq;
     using UnityEngine;
 
     public class AITree : MonoBehaviour
@@ -29,7 +30,17 @@ namespace AINodes
 
         void LoadFunctions()
         {
-            typeof()
+            foreach (var method in typeof(IAIFunctions).GetMethods())
+            {
+                var parameters = method.GetParameters();
+                var parameterDescriptions = string.Join
+                    (", ", method.GetParameters()
+                                 .Select(x => x.ParameterType + " " + x.Name)
+                                 .ToArray());
+
+                Debug.Log($"{method.ReturnType}, {method.Name}, ({parameterDescriptions})");
+            }
+
         }
 
         private void OnEnable()

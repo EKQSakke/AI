@@ -9,7 +9,9 @@ namespace AINodes
         public override bool Check()
         {
             if (blackboard is null) return false;
-            return (bool) blackboard.GetBoardProperty(variableKey).value;
+
+
+            return (bool)blackboard.GetBoardProperty(variableKey).value;
         }
     }
 }

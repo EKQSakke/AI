@@ -22,6 +22,7 @@ namespace AINodes
             values.Add("Hello", true);
             values.Add("World", true);
             values.Add("Penis", false);
+            values.Add("", false);
         }
 
         void Update()
